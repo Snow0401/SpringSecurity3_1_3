@@ -83,8 +83,8 @@ public class User implements UserDetails {
         return name;
     }
 
-    public void setName(String login) {
-        this.name = login;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Role> getRoles() {

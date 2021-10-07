@@ -83,44 +83,4 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("roles")
-    public String printRoles(Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "roles/index";
-    }
-
-    @GetMapping("roles/{id}")
-    public String printRoles(@PathVariable("id") int id, Model model) {
-        model.addAttribute("role", roleService.getRoleById(id));
-        return "roles/info";
-    }
-
-    @PostMapping("roles")
-    public String createRole(@ModelAttribute("role") Role role) {
-        roleService.createNewRole(role);
-        return "redirect:/admin/roles";
-    }
-
-    @GetMapping("roles/new")
-    public String newRole(@ModelAttribute("role") Role role) {
-        return "roles/new";
-    }
-
-    @GetMapping("roles/{id}/edit")
-    public String editRole(@PathVariable("id") int id, Model model) {
-        model.addAttribute("role", roleService.getRoleById(id));
-        return "roles/edit";
-    }
-
-    @PatchMapping("roles/{id}")
-    public String updateRole(@ModelAttribute("role") Role role, @PathVariable("id") int id) {
-        roleService.editRoleById(id, role);
-        return "redirect:/admin/roles";
-    }
-
-    @DeleteMapping("roles/{id}")
-    public String deleteRole(@PathVariable("id") int id) {
-        roleService.deleteRoleById(id);
-        return "redirect:/admin/roles";
-    }
 }

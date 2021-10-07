@@ -15,13 +15,11 @@ public class RoleDaoImpl implements RoleDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
     @Override
     public void createNewRole(Role role) {
         entityManager.persist(role);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Role getRoleById(int id) {
         TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r WHERE r.id = :id", Role.class);
@@ -36,13 +34,11 @@ public class RoleDaoImpl implements RoleDao {
         return query.getResultList().stream().findAny().orElse(null);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Role> getAllRoles() {
         return entityManager.createQuery("SELECT r FROM Role r", Role.class).getResultList();
     }
 
-    @Transactional
     @Override
     public void editRoleById(int id, Role role) {
         Role updatedRole = getRoleById(id);
@@ -50,7 +46,6 @@ public class RoleDaoImpl implements RoleDao {
         updatedRole.setDescription(role.getDescription());
     }
 
-    @Transactional
     @Override
     public void deleteRoleById(int id) {
         entityManager.remove(getRoleById(id));
