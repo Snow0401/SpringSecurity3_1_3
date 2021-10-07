@@ -23,11 +23,11 @@ public class UserInit {
 
 
         Role adminRole = new Role();
-        adminRole.setRoleName("ADMIN");
+        adminRole.setRoleName("ROLE_ADMIN");
         adminRole.setDescription("Allow user's and roles administration");
         roleService.createNewRole(adminRole);
         Role userRole = new Role();
-        userRole.setRoleName("USER");
+        userRole.setRoleName("ROLE_USER");
         userRole.setDescription("Simply user");
         roleService.createNewRole(userRole);
 

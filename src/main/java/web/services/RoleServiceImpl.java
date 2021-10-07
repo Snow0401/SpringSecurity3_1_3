@@ -16,13 +16,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public void createNewRole(Role role) {
-        List<Role> roles = getAllRoles();
-        if (!roles.contains(role)) {
-            if (role.getRoleName().length() < 5 || !role.getRoleName().substring(0,5).equals("ROLE_")) {
-                role.setRoleName("ROLE_" + role.getRoleName());
-            }
-            roleDao.createNewRole(role);
-        }
+        roleDao.createNewRole(role);
     }
 
     @Transactional(readOnly = true)
@@ -43,18 +37,18 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.getAllRoles();
     }
 
-    @Transactional
+    /*@Transactional
     @Override
     public void editRoleById(int id, Role role) {
         if (role.getRoleName().length() < 5 || !role.getRoleName().substring(0,5).equals("ROLE_")) {
             role.setRoleName("ROLE_" + role.getRoleName());
         }
         roleDao.editRoleById(id, role);
-    }
+    }*/
 
-    @Transactional
+    /*@Transactional
     @Override
     public void deleteRoleById(int id) {
         roleDao.deleteRoleById(id);
-    }
+    }*/
 }

@@ -12,8 +12,8 @@ public interface RoleService {
 
     List<Role> getAllRoles();
 
-    void editRoleById(int id, Role role);
+    //void editRoleById(int id, Role role);
 
-    void deleteRoleById(int id);
+    //void deleteRoleById(int id);
 }
 

@@ -39,15 +39,15 @@ public class RoleDaoImpl implements RoleDao {
         return entityManager.createQuery("SELECT r FROM Role r", Role.class).getResultList();
     }
 
-    @Override
+    /*@Override
     public void editRoleById(int id, Role role) {
         Role updatedRole = getRoleById(id);
         updatedRole.setRoleName(role.getRoleName());
         updatedRole.setDescription(role.getDescription());
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void deleteRoleById(int id) {
         entityManager.remove(getRoleById(id));
-    }
+    }*/
 }

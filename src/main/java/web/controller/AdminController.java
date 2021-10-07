@@ -58,18 +58,6 @@ public class AdminController {
         return "/users/edit";
     }
 
-    @GetMapping("users/{id}/change_password")
-    public String changePassword(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "/users/change_password";
-    }
-
-    @PatchMapping("users/{id}/change_password")
-    public String updatePassword(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        userService.updatePassword(id, user.getPassword());
-        return "redirect:/admin/users";
-    }
-
     @PatchMapping("users/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         prepareUser(user);

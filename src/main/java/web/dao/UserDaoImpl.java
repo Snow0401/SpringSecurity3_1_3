@@ -44,14 +44,6 @@ public class UserDaoImpl implements UserDao {
         entityManager.merge(user);
     }
 
-
-    @Override
-    public void updatePassword(long id, String newPassword) {
-        User updatedUser = getUserById(id);
-        updatedUser.setPassword(newPassword);
-
-    }
-
     @Override
     public void deleteUserById(long id) {
         entityManager.remove(getUserById(id));
