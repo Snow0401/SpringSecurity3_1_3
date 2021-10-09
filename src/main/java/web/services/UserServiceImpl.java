@@ -1,6 +1,7 @@
 package web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,16 +12,20 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserDao userDao;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional
     @Override
     public void createNewUser(User user) {
-        if (getUserByName(user.getName()) == null) {
+       if (getUserByName(user.getName()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.createNewUser(user);
         }
@@ -40,13 +45,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void editUserById(long id, User user) {
-        if (user.getPassword() == null) {
-            user.setPassword(userDao.getUserById(id).getPassword());
+    public void editUserById(User user) {
+        if (user.getPassword().equals("")) {
+            user.setPassword(userDao.getUserById(user.getId()).getPassword());
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        userDao.editUserById(id, user);
+        userDao.editUserById(user.getId(), user);
     }
 
 

@@ -10,8 +10,12 @@ import web.models.User;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userService.getUserByName(s);

@@ -9,20 +9,30 @@ import web.models.User;
 import web.services.RoleService;
 import web.services.UserService;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 @RequestMapping("/admin/")
 public class AdminController {
 
-    @Autowired
+
     private UserService userService;
-    @Autowired
+
     private RoleService roleService;
 
+    @Autowired
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
-    private void prepareUser(User user) {
-        for (Role role : user.getRoles()) {
-            role.setId(roleService.getRoleByName(role.getRoleName()).getId());
+    private Set<Role> prepareUser (int[] roles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (int i=0; i < roles.length; i++) {
+            roleSet.add(roleService.getRoleById(roles[i]));
         }
+        return roleSet;
     }
 
 
@@ -39,8 +49,9 @@ public class AdminController {
     }
 
     @PostMapping("users")
-    public String createUser(@ModelAttribute("user") User user) {
-        prepareUser(user);
+    public String createUser(@ModelAttribute("user") User user,
+                             @RequestParam (name ="roles") int[] roles) {
+        user.setRoles(prepareUser(roles));
         userService.createNewUser(user);
         return "redirect:/admin/users";
     }
@@ -59,9 +70,10 @@ public class AdminController {
     }
 
     @PatchMapping("users/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        prepareUser(user);
-        userService.editUserById(id, user);
+    public String updateUser(@ModelAttribute("user") User user,
+                             @RequestParam (name ="roles") int[] roles) {
+        user.setRoles(prepareUser(roles));
+        userService.editUserById(user);
         return "redirect:/admin/users";
     }
 

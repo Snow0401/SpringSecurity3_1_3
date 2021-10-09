@@ -1,11 +1,10 @@
 package web.dao;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import web.models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -27,10 +26,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String name) {
-        TypedQuery<User> query =
-                entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
-        query.setParameter("name", name);
-        return query.getResultList().stream().findAny().orElse(null);
+        return entityManager.unwrap(Session.class).bySimpleNaturalId(User.class).load(name);
+
     }
 
     @Override

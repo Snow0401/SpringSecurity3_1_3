@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    public RoleServiceImpl(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
     @Transactional
     @Override
@@ -25,30 +29,10 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.getRoleById(id);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public Role getRoleByName(String roleName) {
-        return roleDao.getRoleByName(roleName);
-    }
-
     @Transactional
     @Override
     public List<Role> getAllRoles() {
         return roleDao.getAllRoles();
     }
 
-    /*@Transactional
-    @Override
-    public void editRoleById(int id, Role role) {
-        if (role.getRoleName().length() < 5 || !role.getRoleName().substring(0,5).equals("ROLE_")) {
-            role.setRoleName("ROLE_" + role.getRoleName());
-        }
-        roleDao.editRoleById(id, role);
-    }*/
-
-    /*@Transactional
-    @Override
-    public void deleteRoleById(int id) {
-        roleDao.deleteRoleById(id);
-    }*/
 }

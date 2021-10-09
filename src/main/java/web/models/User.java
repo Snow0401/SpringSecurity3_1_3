@@ -1,5 +1,6 @@
 package web.models;
 
+import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
@@ -24,13 +25,14 @@ public class User implements UserDetails {
     @Column(name = "age")
     private byte age;
 
+    @NaturalId
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -132,6 +134,21 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return name.equals(user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override

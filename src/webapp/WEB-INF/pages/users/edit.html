@@ -20,7 +20,7 @@
         <br>
         <tr>
             <td><label for="password">Password</label></td>
-            <td><input type="password" th:field="*{password}" id="password"/> <br/><br/></td>
+            <td><input type="password" th:field="*{password}" id="password"/></td>
         </tr>
         <br>
         <tr>
@@ -42,7 +42,8 @@
             <td><label for="roles">Roles</label></td>
             <td><select multiple="multiple" th:size="${roleList.size()}" th:field="*{roles}" id="roles">
                 <option th:each="role : ${roleList}"
-                        th:value="${role.roleName}" th:text="${role.roleName.substring(5)}"
+                        th:value="${role.getId()}"
+                        th:text="${role.roleName.substring(5)}"
                         th:selected="${user.getRoles().contains(role)}">
                 </option>
             </select>

@@ -13,10 +13,16 @@ import java.util.Set;
 @Component
 public class UserInit {
 
-    @Autowired
+
     private UserService userService;
-    @Autowired
+
     private RoleService roleService;
+
+    @Autowired
+    public UserInit(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @PostConstruct
     private void loadTestUsers() {

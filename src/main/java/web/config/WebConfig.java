@@ -19,8 +19,13 @@ import java.util.Collections;
 @ComponentScan("web")
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
+
     private ApplicationContext applicationContext;
+
+    @Autowired
+    public WebConfig(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
