@@ -8,7 +8,6 @@ import web.models.Role;
 import web.models.User;
 import web.services.RoleService;
 import web.services.UserService;
-
 import java.util.HashSet;
 import java.util.Set;
 

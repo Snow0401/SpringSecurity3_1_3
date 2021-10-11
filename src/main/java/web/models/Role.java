@@ -1,8 +1,12 @@
 package web.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -16,37 +20,6 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "description")
     private String description;
-
-    public Role() {
-    }
-
-    public Role(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String role) {
-        this.roleName = role;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String getAuthority() {

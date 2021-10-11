@@ -2,37 +2,34 @@ package web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import web.dao.RoleDao;
 import web.models.Role;
+import web.repositories.RoleRepository;
+
 import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private RoleDao roleDao;
+    private RoleRepository roleRepository;
 
     @Autowired
-    public RoleServiceImpl(RoleDao roleDao) {
-        this.roleDao = roleDao;
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
-    @Transactional
     @Override
     public void createNewRole(Role role) {
-        roleDao.createNewRole(role);
+        roleRepository.save(role);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Role getRoleById(int id) {
-        return roleDao.getRoleById(id);
+        return roleRepository.getById(id);
     }
 
-    @Transactional
     @Override
     public List<Role> getAllRoles() {
-        return roleDao.getAllRoles();
+        return roleRepository.findAll();
     }
 
 }
