@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createNewUser(User user) {
-       if (getUserByName(user.getName()) == null) {
+       if (getUserByEmail(user.getEmail()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         }
@@ -41,7 +41,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUserById(User user) {
-        if (user.getPassword().equals("")) {
+        if (user.getPassword().equals("") || user.getPassword().equals(
+                userRepository.getById(user.getId()).getPassword())) {
             user.setPassword(userRepository.getById(user.getId()).getPassword());
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByName(String name) {
-        return userRepository.getUserByName(name);
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
     }
 }

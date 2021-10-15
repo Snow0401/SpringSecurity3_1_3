@@ -15,23 +15,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/")
-    public String printWelcome(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello! Spring MVC-SECURITY");
-        model.addAttribute("messages", messages);
-        return "hello";
-    }
-
     @GetMapping(value = "/user")
     public String printUserPage(Principal principal, ModelMap model) {
-        model.addAttribute("user", userService.getUserByName(principal.getName()));
+        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
         return "user";
     }
 
     @GetMapping(value = "/admin")
     public String printAdminPage(Principal principal, ModelMap model) {
-        model.addAttribute("user", userService.getUserByName(principal.getName()));
+        model.addAttribute("admin", userService.getUserByEmail(principal.getName()));
+        model.addAttribute("users", userService.getAllUsers());
         return "admin";
     }
 

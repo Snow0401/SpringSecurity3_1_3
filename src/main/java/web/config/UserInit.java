@@ -38,14 +38,14 @@ public class UserInit {
         roleService.createNewRole(userRole);
 
         Set<Role> roles = new HashSet<>();
-        User userAdmin = new User("Artem", "Gorban", (byte) 31, "admin", "admin");
+        User userAdmin = new User("Artem", "Gorban", (byte) 31, "admin@mail.ru", "admin");
         roles.add(userRole);
         roles.add(adminRole);
         userAdmin.setRoles(roles);
         userService.createNewUser(userAdmin);
 
         roles.clear();
-        User user1 = new User("Anastasiya", "Stepnova", (byte) 24, "user", "user");
+        User user1 = new User("Anastasiya", "Stepnova", (byte) 24, "user@mail.ru", "user");
         roles.add(userRole);
         user1.setRoles(roles);
         userService.createNewUser(user1);

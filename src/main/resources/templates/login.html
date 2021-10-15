@@ -4,45 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<br>
-<br>
-<center><b><font color="red">
-    <p th:if="${param.error}">
-        Incorrect username or password
-    </p>
-</font></b></center>
-<br>
-<center>
-    <table>
-        <tbody>
-        <form th:action="@{/login}" method="POST">
-            <tr>
-                <td valign="top">
-                    <label for="name"><b>User Name: </b></label>
-                </td>
-                <td>
-                    <input type="text" name="j_username" id="name"/> <br/><br/>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="pass"><b>Password: </b></label>
-                </td>
-                <td>
-                    <input type="password" name="j_password" id="pass"/> <br/><br/>
-                </td>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input height="200" type="submit" value="Login"/>
-                </td>
-            </tr>
+<div>
+    <main class="col-lg-3 col-md-6 col-sm-6 mx-auto">
+        <form method="post" action="/login" class="mt-5">
+            <h1 style="text-align:left" class="h3 mb-2 fw-normal">Please sign in</h1>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" placeholder="Email" name="j_username">
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                       name="j_password">
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in
+            </button>
         </form>
-        </tbody>
-    </table>
-</center>
+    </main>
+</div>
+</div>
 </body>
 </html>

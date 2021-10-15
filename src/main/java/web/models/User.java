@@ -30,8 +30,8 @@ public class User implements UserDetails {
     private byte age;
 
     @NaturalId
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -42,11 +42,11 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String firstName, String lastName, byte age, String name, String password) {
+    public User(String firstName, String lastName, byte age, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.name = name;
+        this.email = email;
         this.password = password;
     }
 
@@ -66,7 +66,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -96,12 +96,12 @@ public class User implements UserDetails {
 
         User user = (User) o;
 
-        return name.equals(user.getName());
+        return email.equals(user.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return email.hashCode();
     }
 
     @Override
@@ -110,7 +110,7 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
