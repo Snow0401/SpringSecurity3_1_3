@@ -10,21 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/user")
-    public String printUserPage(Principal principal, ModelMap model) {
-        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
+    @GetMapping("user")
+    public String ShowUser() {
         return "user";
     }
 
-    @GetMapping(value = "/admin")
-    public String printAdminPage(Principal principal, ModelMap model) {
-        model.addAttribute("admin", userService.getUserByEmail(principal.getName()));
-        model.addAttribute("users", userService.getAllUsers());
+    @GetMapping("admin")
+    public String getAdminPage() {
         return "admin";
     }
 

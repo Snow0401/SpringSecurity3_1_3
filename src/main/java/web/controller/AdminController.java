@@ -1,24 +1,20 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.models.Role;
 import web.models.User;
 import web.services.RoleService;
 import web.services.UserService;
-
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
 public class AdminController {
-
 
     private UserService userService;
 
@@ -38,6 +34,50 @@ public class AdminController {
         return roleSet;
     }
 
+    @GetMapping("/getAuthorizedUser")
+    public ResponseEntity<User> getAuthorizedUser(Principal principal) {
+        return ResponseEntity.ok().body(userService.getUserByEmail(principal.getName()));
+    }
+
+    @GetMapping("/allUser")
+    public ResponseEntity<List<User>> getAll() {
+        return ResponseEntity.ok().body(userService.getAllUsers());
+    }
+
+    @GetMapping("getUser/{id}")
+    public ResponseEntity<User> show(@PathVariable long id) {
+        User user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable long id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<?> create(@RequestBody User user) {
+        userService.createNewUser(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody User user) {
+        userService.editUserById(user);
+        return ResponseEntity.ok().body(user);
+    }
+
+
+
+
+
+
+
+
+
+
+/*
     @GetMapping(value = "/adminview")
     public String printUserPage(Principal principal, ModelMap model) {
         model.addAttribute("user", userService.getUserByEmail(principal.getName()));
@@ -58,18 +98,13 @@ public class AdminController {
     }
 
 
-    @PostMapping()
-    public String createUser(@RequestParam(value = "box", defaultValue = "2") int[] roles,
-                             @ModelAttribute User user) {
+    @PostMapping(value = "/create")
+    public ResponseEntity<User> create(@RequestParam(value = "box", defaultValue = "2") int[] roles,
+                             @RequestBody User user) {
         user.setRoles(prepareUser(roles));
         userService.createNewUser(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok().body(user);
     }
-
-
-
-
-
 
 
     @PutMapping("/{id}/update")
@@ -77,7 +112,7 @@ public class AdminController {
         user.setRoles(prepareUser(roles));
         userService.editUserById(user);
         return "redirect:/admin";
-    }
+    }*/
 
 
 }

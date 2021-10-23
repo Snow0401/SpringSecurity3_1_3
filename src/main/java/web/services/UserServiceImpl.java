@@ -3,6 +3,7 @@ package web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import web.models.User;
 import web.repositories.UserRepository;
 
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     @Override
     public void createNewUser(User user) {
        if (getUserByEmail(user.getEmail()) == null) {
@@ -29,16 +31,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     @Override
     public User getUserById(long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).get();
     }
 
+    @Transactional
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void editUserById(User user) {
         if (user.getPassword().equals("") || user.getPassword().equals(
@@ -50,11 +55,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void deleteUserById(long id) {
-        userRepository.delete(getUserById(id));
+        userRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
